@@ -479,6 +479,7 @@ select {
   border-radius: 20px;
   background: var(--white);
   overflow: hidden;
+  position: relative;
 }
 
 .sheet-header {
@@ -619,6 +620,14 @@ select {
   border-radius: 14px;
   background: rgba(var(--theme-secondary-rgb), 0.18);
   border: 1px solid rgba(var(--theme-primary-rgb), 0.16);
+}
+
+.dugout-row:nth-child(odd) {
+  background: rgba(var(--theme-secondary-rgb), 0.2);
+}
+
+.dugout-row:nth-child(even) {
+  background: rgba(var(--theme-primary-rgb), 0.12);
 }
 
 .dugout-slot {
@@ -771,17 +780,19 @@ select {
   }
 
   .sheet-card.dugout-sheet {
-    height: 10.55in;
-    min-height: 10.55in;
+    height: 9.95in;
+    min-height: 9.95in;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .sheet-card.positions-sheet {
-    height: 10.55in;
-    min-height: 10.55in;
+    height: 9.95in;
+    min-height: 9.95in;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .sheet-table th,
@@ -809,12 +820,14 @@ select {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-bottom: 20px;
   }
 
   .sheet-card.positions-sheet .sheet-content {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+    padding-bottom: 20px;
   }
 
   .sheet-table th,
@@ -844,29 +857,29 @@ select {
 
   .sheet-card.dugout-sheet .dugout-row {
     grid-template-columns: 72px minmax(0, 1fr);
-    padding: 12px 14px;
+    padding: 9px 11px;
   }
 
   .sheet-card.dugout-sheet .dugout-slot {
-    font-size: 1.45rem;
-  }
-
-  .sheet-card.dugout-sheet .dugout-row div:last-child {
-    font-size: 1.55rem;
-    line-height: 1.15;
-  }
-
-  .sheet-card.dugout-sheet .dugout-responsibilities {
-    margin-top: 20px;
-    padding: 16px 18px;
-    gap: 10px;
     font-size: 1.18rem;
   }
 
+  .sheet-card.dugout-sheet .dugout-row div:last-child {
+    font-size: 1.22rem;
+    line-height: 1.1;
+  }
+
+  .sheet-card.dugout-sheet .dugout-responsibilities {
+    margin-top: 12px;
+    padding: 12px 14px;
+    gap: 8px;
+    font-size: 0.98rem;
+  }
+
   .sheet-card.dugout-sheet .team-saying {
-    margin-top: 14px;
-    padding-top: 10px;
-    font-size: 1.3rem;
+    margin-top: 8px;
+    padding-top: 4px;
+    font-size: 0.98rem;
   }
 
   .dugout-row {
@@ -906,34 +919,39 @@ select {
   }
 
   .sheet-version {
-    margin-top: 6px;
-    font-size: 0.55rem;
+    position: absolute;
+    right: 8px;
+    bottom: 5px;
+    margin-top: 0;
+    font-size: 0.48rem;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 1px 4px;
   }
 
   .sheet-card.positions-sheet .sheet-table th,
   .sheet-card.positions-sheet .sheet-table td {
-    padding: 6px 5px;
-    font-size: 1.5rem;
-    line-height: 1.08;
+    padding: 3px 3px;
+    font-size: 0.98rem;
+    line-height: 1.04;
   }
 
   .sheet-card.positions-sheet .sheet-table th {
-    font-size: 0.82rem;
+    font-size: 0.58rem;
   }
 
   .sheet-card.positions-sheet .sheet-table td:nth-child(1) {
-    width: 72px;
-    font-size: 1.2rem;
+    width: 54px;
+    font-size: 0.84rem;
   }
 
   .sheet-card.positions-sheet .sheet-table td:nth-child(2) {
-    width: 150px;
-    font-size: 1.55rem;
+    width: 104px;
+    font-size: 1rem;
   }
 
   .sheet-card.positions-sheet .sheet-table th:nth-child(2),
   .sheet-card.positions-sheet .sheet-table td:nth-child(2) {
-    width: 150px;
+    width: 104px;
   }
 }
 
