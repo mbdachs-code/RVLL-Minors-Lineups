@@ -724,24 +724,17 @@ function renderRosterEditor() {
     nameInput.addEventListener("blur", () => render());
     nameField.appendChild(nameInput);
 
-    const orderField = document.createElement("label");
-    orderField.className = "order-field";
-    orderField.innerHTML = "<span>Batting Slot</span>";
-    const orderInput = document.createElement("input");
-    orderInput.type = "number";
-    orderInput.min = "1";
-    orderInput.max = String(state.players.length);
-    orderInput.value = String(player.battingOrder);
-    orderInput.addEventListener("change", (event) => handleBattingOrderChange(player.id, event.target.value));
-    orderField.appendChild(orderInput);
-
     const removeButton = document.createElement("button");
     removeButton.type = "button";
     removeButton.className = "ghost small-button";
     removeButton.textContent = "Remove";
     removeButton.addEventListener("click", () => removePlayer(player.id));
 
-    card.append(nameField, orderField, removeButton);
+    const spacer = document.createElement("div");
+    spacer.className = "player-name-field";
+    spacer.innerHTML = "<span>Status</span><strong>Active</strong>";
+
+    card.append(nameField, spacer, removeButton);
     rosterEditor.appendChild(card);
   });
 
@@ -764,7 +757,7 @@ function renderRosterEditor() {
 
     const statusField = document.createElement("div");
     statusField.className = "player-name-field";
-    statusField.innerHTML = "<span>Batting Slot</span><strong>Out for this game</strong>";
+    statusField.innerHTML = "<span>Status</span><strong>Out for this game</strong>";
 
     const addButton = document.createElement("button");
     addButton.type = "button";
@@ -825,7 +818,6 @@ function renderSavedRosterSummary() {
 
 function renderBattingOrder() {
   battingOrder.innerHTML = "";
-  const { starter, relievers, possibleRelievers } = getPitchingPlan();
 
   getPlayersByBattingOrder().forEach((player) => {
     const row = document.createElement("div");
@@ -859,31 +851,13 @@ function renderBattingOrder() {
 
     const playerName = document.createElement("div");
     playerName.className = "player-name-field";
-    playerName.innerHTML = `<span>Slot ${player.battingOrder}</span><strong>${player.name || "Unnamed Player"}</strong>`;
+    playerName.innerHTML = `<span>Player</span><strong>${player.name || "Unnamed Player"}</strong>`;
 
-    const summary = document.createElement("div");
-    summary.className = "player-name-field";
-    const catcherInnings = player.positions.filter((position) => position === "C").length;
-    const pitcherInnings = player.positions.filter((position) => position === "P").length;
-    summary.innerHTML = `<span>Workload</span><strong>${catcherInnings} catching inning(s), ${pitcherInnings} pitching inning(s)</strong>`;
+    const slotField = document.createElement("div");
+    slotField.className = "player-name-field";
+    slotField.innerHTML = `<span>Batting Slot</span><strong>${player.battingOrder}</strong>`;
 
-    const rolePill = document.createElement("span");
-    let roleText = "Field Player";
-    let tone = "warn";
-    if (starter && starter.id === player.id) {
-      roleText = "Starting Pitcher";
-      tone = "ok";
-    } else if (relievers.some((entry) => entry.id === player.id)) {
-      roleText = "Reliever";
-      tone = "ok";
-    } else if (possibleRelievers.some((entry) => entry.id === player.id)) {
-      roleText = "Possible Reliever";
-      tone = "warn";
-    }
-    rolePill.className = `pill ${tone}`;
-    rolePill.textContent = roleText;
-
-    row.append(playerName, summary, rolePill);
+    row.append(playerName, slotField);
     battingOrder.appendChild(row);
   });
 }
