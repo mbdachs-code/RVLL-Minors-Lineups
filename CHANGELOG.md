@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.7
+
+- Changed the dugout batting-order print page to use a single lineup column on the left and the role reminders on the right.
+
 ## v1.0.6
 
 - Added cache-busting for hosted assets so GitHub Pages updates show up more reliably after each release.

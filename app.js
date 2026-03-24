@@ -1207,6 +1207,9 @@ function buildCoachTable(container, players) {
 }
 
 function buildDugoutBattingOrder(container) {
+  const layout = document.createElement("div");
+  layout.className = "dugout-layout";
+
   const list = document.createElement("div");
   list.className = "dugout-list";
   getPlayersByBattingOrder().forEach((player) => {
@@ -1215,7 +1218,9 @@ function buildDugoutBattingOrder(container) {
     row.innerHTML = `<div class="dugout-slot">${player.battingOrder}</div><div>${player.name || "Unnamed Player"}</div>`;
     list.appendChild(row);
   });
-  container.appendChild(list);
+
+  const side = document.createElement("div");
+  side.className = "dugout-side";
 
   const responsibilities = document.createElement("div");
   responsibilities.className = "dugout-responsibilities";
@@ -1224,7 +1229,10 @@ function buildDugoutBattingOrder(container) {
     <div><strong>On deck:</strong> watching pitcher</div>
     <div><strong>In the hole:</strong> getting ready</div>
   `;
-  container.appendChild(responsibilities);
+  side.appendChild(responsibilities);
+
+  layout.append(list, side);
+  container.appendChild(layout);
 
 }
 
