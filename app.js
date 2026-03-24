@@ -143,6 +143,7 @@ const positionsGrid = document.querySelector("#positionsGrid");
 const validationSummary = document.querySelector("#validationSummary");
 const printButton = document.querySelector("#printButton");
 const printSheets = document.querySelector("#printSheets");
+let draggedPlayerId = null;
 
 function createPlayer(name, index) {
   return {
@@ -470,17 +471,35 @@ function handleBattingOrderChange(playerId, value) {
     return;
   }
 
-  const currentIndex = state.players.findIndex((entry) => entry.id === playerId);
+  const orderedPlayers = getPlayersByBattingOrder();
+  const currentIndex = orderedPlayers.findIndex((entry) => entry.id === playerId);
   if (currentIndex === -1) {
     return;
   }
 
-  const targetIndex = Math.max(0, Math.min(state.players.length - 1, nextOrder - 1));
-  const [player] = state.players.splice(currentIndex, 1);
-  state.players.splice(targetIndex, 0, player);
-  state.players.forEach((entry, index) => {
+  const targetIndex = Math.max(0, Math.min(orderedPlayers.length - 1, nextOrder - 1));
+  const [player] = orderedPlayers.splice(currentIndex, 1);
+  orderedPlayers.splice(targetIndex, 0, player);
+  orderedPlayers.forEach((entry, index) => {
     entry.battingOrder = index + 1;
   });
+  state.players = orderedPlayers;
+  render();
+}
+
+function movePlayerToBattingIndex(playerId, targetIndex) {
+  const orderedPlayers = getPlayersByBattingOrder();
+  const currentIndex = orderedPlayers.findIndex((entry) => entry.id === playerId);
+  if (currentIndex === -1 || targetIndex < 0 || targetIndex >= orderedPlayers.length) {
+    return;
+  }
+
+  const [player] = orderedPlayers.splice(currentIndex, 1);
+  orderedPlayers.splice(targetIndex, 0, player);
+  orderedPlayers.forEach((entry, index) => {
+    entry.battingOrder = index + 1;
+  });
+  state.players = orderedPlayers;
   render();
 }
 
@@ -811,6 +830,32 @@ function renderBattingOrder() {
   getPlayersByBattingOrder().forEach((player) => {
     const row = document.createElement("div");
     row.className = "order-row";
+    row.draggable = true;
+    row.addEventListener("dragstart", () => {
+      draggedPlayerId = player.id;
+      row.classList.add("dragging");
+    });
+    row.addEventListener("dragend", () => {
+      draggedPlayerId = null;
+      row.classList.remove("dragging");
+    });
+    row.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      row.classList.add("drag-target");
+    });
+    row.addEventListener("dragleave", () => {
+      row.classList.remove("drag-target");
+    });
+    row.addEventListener("drop", (event) => {
+      event.preventDefault();
+      row.classList.remove("drag-target");
+      if (!draggedPlayerId || draggedPlayerId === player.id) {
+        return;
+      }
+      const orderedPlayers = getPlayersByBattingOrder();
+      const targetIndex = orderedPlayers.findIndex((entry) => entry.id === player.id);
+      movePlayerToBattingIndex(draggedPlayerId, targetIndex);
+    });
 
     const playerName = document.createElement("div");
     playerName.className = "player-name-field";

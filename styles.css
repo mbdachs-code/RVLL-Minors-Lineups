@@ -268,6 +268,20 @@ button.ghost {
   background: var(--white);
 }
 
+.order-row {
+  cursor: grab;
+}
+
+.order-row.dragging {
+  opacity: 0.55;
+  cursor: grabbing;
+}
+
+.order-row.drag-target {
+  outline: 2px dashed rgba(var(--theme-primary-rgb), 0.48);
+  outline-offset: 2px;
+}
+
 .player-name-field,
 .order-field {
   display: grid;
