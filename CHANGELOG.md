@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.4
+
+- Forced a fresh GitHub Pages redeploy to refresh the published site version.
+
 ## v1.0.3
 
 - Added visible app versioning for local and printed comparisons.
