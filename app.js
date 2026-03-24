@@ -466,12 +466,21 @@ function handleRosterNameChange(playerId, value) {
 
 function handleBattingOrderChange(playerId, value) {
   const nextOrder = Number.parseInt(value, 10);
-  const player = state.players.find((entry) => entry.id === playerId);
-  if (!player || Number.isNaN(nextOrder)) {
+  if (Number.isNaN(nextOrder)) {
     return;
   }
-  player.battingOrder = Math.max(1, Math.min(state.players.length, nextOrder));
-  normalizeBattingOrder();
+
+  const currentIndex = state.players.findIndex((entry) => entry.id === playerId);
+  if (currentIndex === -1) {
+    return;
+  }
+
+  const targetIndex = Math.max(0, Math.min(state.players.length - 1, nextOrder - 1));
+  const [player] = state.players.splice(currentIndex, 1);
+  state.players.splice(targetIndex, 0, player);
+  state.players.forEach((entry, index) => {
+    entry.battingOrder = index + 1;
+  });
   render();
 }
 
