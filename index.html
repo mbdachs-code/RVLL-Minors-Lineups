@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Division Lineup Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Little League Lineup Planner</p>
+          <div id="heroBrand" class="hero-brand"></div>
+          <p class="hero-text">
+            Build a six-inning lineup, set the batting order, assign defensive
+            positions, track relievers, and print game-ready coach sheets.
+          </p>
+        </div>
+        <div class="hero-badge">
+          <span>6 innings</span>
+          <span>9 fielders</span>
+          <span>Built-in checks</span>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel controls-panel">
+          <div class="panel-header">
+            <h2>Game Setup</h2>
+            <p>Adjust the roster, batting order, and spring break setting.</p>
+          </div>
+
+          <div class="game-meta-grid game-meta-grid--wide">
+            <label class="player-name-field">
+              <span>Own Team</span>
+              <select id="teamInput"></select>
+            </label>
+            <label class="player-name-field opponent-select-wrap">
+              <span>Opponent</span>
+              <select id="opponentInput"></select>
+            </label>
+            <label class="player-name-field">
+              <span>Location</span>
+              <select id="locationInput">
+                <option value="">Select field</option>
+                <option value="Minors Field">Minors Field</option>
+                <option value="Sean Canon (Majors) Field">Sean Canon (Majors) Field</option>
+              </select>
+            </label>
+            <label class="player-name-field">
+              <span>Game Date</span>
+              <input id="dateInput" type="date" />
+            </label>
+            <label class="player-name-field">
+              <span>Game Time</span>
+              <input id="timeInput" type="time" />
+            </label>
+          </div>
+          <div id="opponentPreview" class="opponent-preview"></div>
+
+          <div class="game-settings">
+            <label class="toggle">
+              <input id="homeTeamToggle" type="checkbox" checked />
+              <span>Own team is home</span>
+            </label>
+            <label class="toggle">
+              <input id="springBreakToggle" type="checkbox" />
+              <span>After spring break</span>
+            </label>
+            <p class="helper-text">
+              Pitchers may record 6 outs before spring break and 9 outs after
+              spring break.
+            </p>
+          </div>
+
+          <div class="roster-actions">
+            <button id="addPlayerButton" type="button">Add Player</button>
+            <button id="randomizeOrderButton" type="button" class="secondary">
+              Randomize Batting Order
+            </button>
+            <button id="saveRosterButton" type="button">Save Team Roster</button>
+            <button id="restoreRosterButton" type="button" class="secondary">
+              Restore Team Roster
+            </button>
+            <button id="saveLineupButton" type="button">Save Lineup</button>
+            <button id="resetButton" type="button" class="ghost">
+              Reset Demo Roster
+            </button>
+          </div>
+
+          <div id="savedRosterSummary" class="empty-state"></div>
+
+          <div id="rosterEditor" class="roster-editor"></div>
+
+          <div class="saved-lineups-wrap">
+            <div class="panel-header">
+              <h2>Saved Lineups</h2>
+              <p>Reload past games from this browser.</p>
+            </div>
+            <div id="savedLineups" class="saved-lineups"></div>
+          </div>
+        </section>
+
+        <section class="panel lineup-panel">
+          <div class="panel-header">
+            <h2>Batting Order</h2>
+            <p>Set the order manually or randomize it with one click.</p>
+          </div>
+          <div id="battingOrder" class="batting-order"></div>
+        </section>
+
+        <section class="panel positions-panel">
+          <div class="panel-header">
+            <h2>Defensive Positions By Inning</h2>
+            <p>
+              Assign each player a field position, pitcher, or bench role for
+              innings 1-6, and mark possible relievers from the same table.
+            </p>
+          </div>
+          <div class="table-wrap">
+            <div id="positionsGrid" class="positions-grid"></div>
+          </div>
+        </section>
+
+        <section class="panel validation-panel">
+          <div class="panel-header">
+            <h2>Lineup Checks</h2>
+            <p>These update automatically as you make changes.</p>
+          </div>
+          <div id="validationSummary" class="validation-summary"></div>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="panel-header">
+            <h2>Coach Sheets</h2>
+          </div>
+          <div class="roster-actions">
+            <button id="printButton" type="button">Print Sheets</button>
+          </div>
+          <div id="printSheets" class="print-sheets"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="playerNameInputTemplate">
+      <label class="player-name-field">
+        <span>Player</span>
+        <input type="text" maxlength="24" />
+      </label>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
