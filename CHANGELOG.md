@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.6
+
+- Added cache-busting for hosted assets so GitHub Pages updates show up more reliably after each release.
+
 ## v1.0.4
 
 - Forced a fresh GitHub Pages redeploy to refresh the published site version.

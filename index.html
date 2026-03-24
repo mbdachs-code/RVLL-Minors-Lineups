@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Division Lineup Generator</title>
-    <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function loadStyles() {
+        const stamp = Date.now();
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `styles.css?v=${stamp}`;
+        document.head.appendChild(link);
+      })();
+    </script>
   </head>
   <body>
     <div class="page-shell">
@@ -154,7 +162,23 @@
       </label>
     </template>
 
-    <script src="version.js"></script>
-    <script src="app.js"></script>
+    <script>
+      (function loadScripts() {
+        const stamp = Date.now();
+
+        function appendScript(src, onload) {
+          const script = document.createElement("script");
+          script.src = `${src}?v=${stamp}`;
+          if (onload) {
+            script.onload = onload;
+          }
+          document.body.appendChild(script);
+        }
+
+        appendScript("version.js", function () {
+          appendScript("app.js");
+        });
+      })();
+    </script>
   </body>
 </html>
