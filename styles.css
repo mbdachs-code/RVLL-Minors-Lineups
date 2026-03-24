@@ -40,6 +40,24 @@ select {
   padding: 24px 0 40px;
 }
 
+.app-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.app-version,
+.sheet-version {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: rgba(24, 33, 44, 0.62);
+}
+
+.sheet-version {
+  margin-top: 10px;
+  text-align: right;
+}
+
 .hero {
   display: flex;
   justify-content: space-between;
@@ -885,6 +903,11 @@ select {
   .sheet-card.coach-sheet .pitching-summary-cell div:last-child {
     font-size: 0.58rem;
     line-height: 1.02;
+  }
+
+  .sheet-version {
+    margin-top: 6px;
+    font-size: 0.55rem;
   }
 
   .sheet-card.positions-sheet .sheet-table th,

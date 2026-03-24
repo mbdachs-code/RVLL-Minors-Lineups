@@ -143,6 +143,7 @@ const positionsGrid = document.querySelector("#positionsGrid");
 const validationSummary = document.querySelector("#validationSummary");
 const printButton = document.querySelector("#printButton");
 const printSheets = document.querySelector("#printSheets");
+const appVersion = document.querySelector("#appVersion");
 let draggedPlayerId = null;
 
 function createPlayer(name, index) {
@@ -197,6 +198,10 @@ function getDefaultExportFileName() {
   const myTeam = state.game.team || "My Team";
   const opponent = state.game.opponent || "TBD";
   return `${getCompactGameDate()} ${myTeam} vs. ${opponent}`;
+}
+
+function getVersionLabel() {
+  return `Version ${typeof APP_VERSION === "string" ? APP_VERSION : "v0.0.0"}`;
 }
 
 function seedDefaultPositions() {
@@ -1125,6 +1130,11 @@ function createSheetCard(title, subtitle, contentBuilder) {
     content.appendChild(saying);
   }
 
+  const version = document.createElement("div");
+  version.className = "sheet-version";
+  version.textContent = getVersionLabel();
+  content.appendChild(version);
+
   card.append(header, content);
   return card;
 }
@@ -1291,6 +1301,7 @@ function render() {
   renderPositionsGrid();
   renderValidationSummary();
   renderPrintSheets();
+  appVersion.textContent = getVersionLabel();
 }
 
 springBreakToggle.addEventListener("change", (event) => {

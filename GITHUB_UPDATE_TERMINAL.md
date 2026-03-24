@@ -14,6 +14,6 @@ Example:
 ```bash
 cd "/Users/michaeldachs/Documents/Lineup Creator"
 git add .
-git commit -m "Update batting order behavior"
+git commit -m "Update 1.0.2"
 git push
 ```
