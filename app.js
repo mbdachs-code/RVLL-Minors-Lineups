@@ -1089,6 +1089,9 @@ function createSheetCard(title, subtitle, contentBuilder) {
   card.className = "sheet-card";
   if (title.startsWith("Coach Sheet")) {
     card.classList.add("coach-sheet");
+    if (title === "Coach Sheet: Batting Order") {
+      card.classList.add("coach-batting-sheet");
+    }
   } else if (title === "Dugout Batting Order") {
     card.classList.add("dugout-sheet");
   } else if (title === "Positions By Batting Order") {
