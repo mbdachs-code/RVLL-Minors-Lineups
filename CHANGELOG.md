@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.9
+
+- Tightened iPad print layouts for Safari and Chrome so the coach, dugout, and positions sheets are less likely to spill onto extra pages.
+
 ## v1.0.8
 
 - Added a second defensive-position entry mode so coaches can build innings by position as well as by player name.

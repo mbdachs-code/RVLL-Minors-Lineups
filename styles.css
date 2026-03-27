@@ -790,7 +790,7 @@ select {
 @media print {
   @page {
     size: portrait;
-    margin: 0.22in;
+    margin: 0.18in;
   }
 
   body {
@@ -834,7 +834,9 @@ select {
     border-radius: 0;
     page-break-after: always;
     break-after: page;
-    margin: 0 0 0.08in;
+    margin: 0 0 0.04in;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .sheet-card:last-child {
@@ -846,7 +848,7 @@ select {
     break-after: auto;
     height: auto;
     min-height: 0;
-    margin-bottom: 0.32in;
+    margin-bottom: 0.22in;
     display: block;
     overflow: visible;
   }
@@ -854,12 +856,12 @@ select {
   .sheet-card.coach-sheet:nth-of-type(2) {
     page-break-after: always;
     break-after: page;
-    margin-bottom: 0.08in;
+    margin-bottom: 0.04in;
   }
 
   .sheet-card.dugout-sheet {
-    height: 9.15in;
-    min-height: 9.15in;
+    height: 8.9in;
+    min-height: 8.9in;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -867,8 +869,8 @@ select {
   }
 
   .sheet-card.positions-sheet {
-    height: 9.52in;
-    min-height: 9.52in;
+    height: 9.08in;
+    min-height: 9.08in;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -883,11 +885,11 @@ select {
   }
 
   .sheet-header {
-    padding: 6px 8px 4px;
+    padding: 5px 7px 3px;
   }
 
   .sheet-content {
-    padding: 0 6px 6px;
+    padding: 0 5px 5px;
   }
 
   .sheet-card.coach-sheet .sheet-content {
@@ -900,7 +902,7 @@ select {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 6px;
+    padding-bottom: 4px;
   }
 
   .sheet-card.positions-sheet .sheet-content {
@@ -908,7 +910,7 @@ select {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 0 8px 22px;
+    padding: 0 7px 18px;
   }
 
   .sheet-table th,
@@ -932,48 +934,48 @@ select {
   }
 
   .dugout-list {
-    gap: 5px;
-    padding-top: 4px;
+    gap: 4px;
+    padding-top: 2px;
   }
 
   .sheet-card.dugout-sheet .dugout-layout {
     grid-template-columns: minmax(0, 1.7fr) minmax(0, 0.85fr);
-    gap: 8px;
+    gap: 6px;
     align-items: start;
   }
 
   .sheet-card.dugout-sheet .dugout-list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 7px;
+    gap: 5px;
     padding-top: 0;
   }
 
   .sheet-card.dugout-sheet .dugout-row {
     grid-template-columns: 46px minmax(0, 1fr);
-    padding: 7px 9px;
+    padding: 6px 8px;
   }
 
   .sheet-card.dugout-sheet .dugout-slot {
-    font-size: 1.02rem;
+    font-size: 0.94rem;
   }
 
   .sheet-card.dugout-sheet .dugout-row div:last-child {
-    font-size: 1.06rem;
-    line-height: 1.06;
+    font-size: 0.98rem;
+    line-height: 1.03;
   }
 
   .sheet-card.dugout-sheet .dugout-responsibilities {
     margin-top: 0;
-    padding: 10px 12px;
-    gap: 7px;
-    font-size: 0.86rem;
+    padding: 8px 10px;
+    gap: 6px;
+    font-size: 0.78rem;
   }
 
   .sheet-card.dugout-sheet .team-saying {
-    margin-top: 6px;
-    padding-top: 4px;
-    font-size: 1rem;
+    margin-top: 4px;
+    padding-top: 2px;
+    font-size: 0.92rem;
     font-weight: 900;
   }
 
@@ -1018,44 +1020,44 @@ select {
   }
 
   .sheet-card.coach-batting-sheet .sheet-header {
-    padding: 5px 7px 3px;
+    padding: 4px 6px 2px;
   }
 
   .sheet-card.coach-batting-sheet .sheet-content {
-    padding: 0 4px 2px;
+    padding: 0 3px 1px;
   }
 
   .sheet-card.coach-batting-sheet .sheet-table th,
   .sheet-card.coach-batting-sheet .sheet-table td {
-    padding: 1px 2px;
-    font-size: 0.56rem;
+    padding: 1px 1px;
+    font-size: 0.52rem;
     line-height: 1;
   }
 
   .sheet-card.coach-batting-sheet .sheet-table th {
-    font-size: 0.46rem;
+    font-size: 0.42rem;
   }
 
   .sheet-card.coach-batting-sheet .sheet-table td:nth-child(2) {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
   }
 
   .sheet-card.coach-batting-sheet .sheet-table th:nth-child(2),
   .sheet-card.coach-batting-sheet .sheet-table td:nth-child(2) {
-    width: 78px;
+    width: 72px;
   }
 
   .sheet-card.coach-batting-sheet .pitching-summary-row {
-    gap: 3px;
-    padding-top: 2px;
+    gap: 2px;
+    padding-top: 1px;
   }
 
   .sheet-card.coach-batting-sheet .pitching-summary-cell {
-    padding: 2px 3px;
+    padding: 1px 2px;
   }
 
   .sheet-card.coach-batting-sheet .pitching-summary-cell div:last-child {
-    font-size: 0.52rem;
+    font-size: 0.48rem;
     line-height: 1;
   }
 
@@ -1078,28 +1080,28 @@ select {
 
   .sheet-card.positions-sheet .sheet-table th,
   .sheet-card.positions-sheet .sheet-table td {
-    padding: 5px 4px;
-    font-size: 1.02rem;
-    line-height: 1.08;
+    padding: 4px 3px;
+    font-size: 0.92rem;
+    line-height: 1.04;
   }
 
   .sheet-card.positions-sheet .sheet-table th {
-    font-size: 0.64rem;
+    font-size: 0.56rem;
   }
 
   .sheet-card.positions-sheet .sheet-table td:nth-child(1) {
     width: 48px;
-    font-size: 0.82rem;
+    font-size: 0.74rem;
   }
 
   .sheet-card.positions-sheet .sheet-table td:nth-child(2) {
-    width: 116px;
-    font-size: 1.12rem;
+    width: 104px;
+    font-size: 1rem;
   }
 
   .sheet-card.positions-sheet .sheet-table th:nth-child(2),
   .sheet-card.positions-sheet .sheet-table td:nth-child(2) {
-    width: 116px;
+    width: 104px;
   }
 
   .sheet-card.positions-sheet .sheet-table tbody td {
@@ -1107,7 +1109,7 @@ select {
   }
 
   .sheet-card.positions-sheet .sheet-table tbody tr {
-    height: 0.62in;
+    height: 0.54in;
   }
 
   .sheet-card.positions-sheet .team-saying {
@@ -1117,7 +1119,7 @@ select {
     transform: translateX(-50%);
     margin-top: 0;
     padding-top: 0;
-    font-size: 1.02rem;
+    font-size: 0.92rem;
     font-weight: 900;
     background: rgba(255, 255, 255, 0.9);
     padding: 2px 6px;
