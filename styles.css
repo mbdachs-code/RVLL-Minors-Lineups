@@ -843,22 +843,26 @@ select {
     page-break-after: auto;
   }
 
+  .coach-page {
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+  }
+
   .sheet-card.coach-sheet {
-    page-break-after: auto;
-    break-after: auto;
-    height: 50vh;
-    min-height: 50vh;
-    max-height: 50vh;
-    margin-bottom: 0;
+    page-break-after: avoid;
+    break-after: avoid;
+    height: auto;
+    min-height: 0;
+    margin-bottom: 0.18in;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
 
-  .sheet-card.coach-sheet:nth-of-type(2) {
-    page-break-after: always;
-    break-after: page;
-    margin-bottom: 0.04in;
+  .sheet-card.coach-sheet:last-child {
+    margin-bottom: 0;
   }
 
   .sheet-card.dugout-sheet {
@@ -905,7 +909,6 @@ select {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding-bottom: 4px;
   }
 
@@ -943,30 +946,35 @@ select {
   }
 
   .sheet-card.dugout-sheet .dugout-layout {
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 0.85fr);
+    display: flex;
+    flex: 1 1 auto;
     gap: 6px;
-    align-items: start;
+    align-items: stretch;
   }
 
   .sheet-card.dugout-sheet .dugout-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0;
     padding-top: 0;
   }
 
   .sheet-card.dugout-sheet .dugout-row {
+    flex: 1;
+    display: grid;
     grid-template-columns: 46px minmax(0, 1fr);
-    padding: 6px 8px;
+    align-items: center;
+    padding: 4px 8px;
   }
 
   .sheet-card.dugout-sheet .dugout-slot {
-    font-size: 0.94rem;
+    font-size: 1rem;
   }
 
   .sheet-card.dugout-sheet .dugout-row div:last-child {
-    font-size: 0.98rem;
-    line-height: 1.03;
+    font-size: 1.1rem;
+    line-height: 1.1;
   }
 
   .sheet-card.dugout-sheet .dugout-responsibilities {
@@ -974,13 +982,11 @@ select {
     padding: 8px 10px;
     gap: 6px;
     font-size: 0.78rem;
+    flex: 0 0 auto;
   }
 
   .sheet-card.dugout-sheet .team-saying {
-    margin-top: 4px;
-    padding-top: 2px;
-    font-size: 0.92rem;
-    font-weight: 900;
+    display: none;
   }
 
   .dugout-row {

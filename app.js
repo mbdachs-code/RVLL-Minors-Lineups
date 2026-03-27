@@ -1474,20 +1474,23 @@ function buildPositionChartByOrder(container) {
 
 function renderPrintSheets() {
   printSheets.innerHTML = "";
-  [
-    createSheetCard("Coach Sheet: Batting Order", "Players listed in batting order with positions by inning.", (container) => {
-      buildCoachTable(container, getPlayersByBattingOrder());
-    }),
-    createSheetCard("Coach Sheet: Alphabetical", "Players listed alphabetically by first name with inning assignments.", (container) => {
-      buildCoachTable(container, getPlayersAlphabetically());
-    }),
-    createSheetCard("Dugout Batting Order", "Single-page batting order to post in the dugout.", (container) => {
-      buildDugoutBattingOrder(container);
-    }),
-    createSheetCard("Positions By Batting Order", "Single-page inning-by-inning position chart.", (container) => {
-      buildPositionChartByOrder(container);
-    })
-  ].forEach((sheet) => printSheets.appendChild(sheet));
+
+  const coachPage = document.createElement("div");
+  coachPage.className = "coach-page";
+  coachPage.appendChild(createSheetCard("Coach Sheet: Batting Order", "Players listed in batting order with positions by inning.", (container) => {
+    buildCoachTable(container, getPlayersByBattingOrder());
+  }));
+  coachPage.appendChild(createSheetCard("Coach Sheet: Alphabetical", "Players listed alphabetically by first name with inning assignments.", (container) => {
+    buildCoachTable(container, getPlayersAlphabetically());
+  }));
+  printSheets.appendChild(coachPage);
+
+  printSheets.appendChild(createSheetCard("Dugout Batting Order", "Single-page batting order to post in the dugout.", (container) => {
+    buildDugoutBattingOrder(container);
+  }));
+  printSheets.appendChild(createSheetCard("Positions By Batting Order", "Single-page inning-by-inning position chart.", (container) => {
+    buildPositionChartByOrder(container);
+  }));
 }
 
 function render() {
