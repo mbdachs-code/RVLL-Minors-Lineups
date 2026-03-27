@@ -205,6 +205,10 @@ button.secondary {
   color: var(--navy-deep);
 }
 
+button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
+}
+
 button.ghost {
   background: transparent;
   color: var(--navy);
@@ -359,6 +363,13 @@ select {
 .position-select {
   text-align: center;
   font-weight: 700;
+}
+
+.slot-label {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 1.02rem;
+  min-width: 88px;
 }
 
 .position-infield {
@@ -708,6 +719,63 @@ select {
   gap: 10px;
 }
 
+.reliever-strip {
+  display: grid;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(var(--theme-primary-rgb), 0.14);
+  border-radius: 16px;
+  background: rgba(var(--theme-primary-rgb), 0.05);
+}
+
+.reliever-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.reliever-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--theme-primary-rgb), 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.reliever-chip input {
+  margin: 0;
+}
+
+.positions-table-by-slot th:first-child,
+.positions-table-by-slot td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--white);
+}
+
+.positions-table-by-slot tbody td:first-child {
+  z-index: 2;
+}
+
+.positions-table-by-slot td:first-child.position-infield {
+  background: #e7d7bf;
+}
+
+.positions-table-by-slot td:first-child.position-outfield {
+  background: #dcefd3;
+}
+
+.positions-table-by-slot td:first-child.position-dh {
+  background: rgba(var(--theme-primary-rgb), 0.28);
+  color: var(--navy-deep);
+}
+
 .reliever-toggle {
   display: inline-flex;
   align-items: center;
@@ -799,8 +867,8 @@ select {
   }
 
   .sheet-card.positions-sheet {
-    height: 9.45in;
-    min-height: 9.45in;
+    height: 9.52in;
+    min-height: 9.52in;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -839,8 +907,8 @@ select {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 10px;
+    justify-content: flex-start;
+    padding: 0 8px 22px;
   }
 
   .sheet-table th,
@@ -1010,47 +1078,52 @@ select {
 
   .sheet-card.positions-sheet .sheet-table th,
   .sheet-card.positions-sheet .sheet-table td {
-    padding: 3px 3px;
-    font-size: 0.88rem;
-    line-height: 1.05;
+    padding: 5px 4px;
+    font-size: 1.02rem;
+    line-height: 1.08;
   }
 
   .sheet-card.positions-sheet .sheet-table th {
-    font-size: 0.58rem;
+    font-size: 0.64rem;
   }
 
   .sheet-card.positions-sheet .sheet-table td:nth-child(1) {
-    width: 44px;
-    font-size: 0.74rem;
+    width: 48px;
+    font-size: 0.82rem;
   }
 
   .sheet-card.positions-sheet .sheet-table td:nth-child(2) {
-    width: 92px;
-    font-size: 0.98rem;
+    width: 116px;
+    font-size: 1.12rem;
   }
 
   .sheet-card.positions-sheet .sheet-table th:nth-child(2),
   .sheet-card.positions-sheet .sheet-table td:nth-child(2) {
-    width: 92px;
+    width: 116px;
   }
 
   .sheet-card.positions-sheet .sheet-table tbody td {
     font-weight: 800;
   }
 
+  .sheet-card.positions-sheet .sheet-table tbody tr {
+    height: 0.62in;
+  }
+
   .sheet-card.positions-sheet .team-saying {
     position: absolute;
     left: 50%;
-    bottom: 5px;
+    bottom: 6px;
     transform: translateX(-50%);
     margin-top: 0;
     padding-top: 0;
-    font-size: 0.92rem;
+    font-size: 1.02rem;
     font-weight: 900;
     background: rgba(255, 255, 255, 0.9);
-    padding: 2px 5px;
+    padding: 2px 6px;
     text-align: center;
   }
+}
 
 @media (max-width: 860px) {
   .page-shell {

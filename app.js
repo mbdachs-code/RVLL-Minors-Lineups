@@ -106,6 +106,7 @@ const TEAMS = [
 
 const state = {
   afterSpringBreak: false,
+  positionEntryMode: "name",
   game: {
     team: "Yankees",
     opponent: "Pirates",
@@ -140,6 +141,8 @@ const savedRosterSummary = document.querySelector("#savedRosterSummary");
 const rosterEditor = document.querySelector("#rosterEditor");
 const battingOrder = document.querySelector("#battingOrder");
 const positionsGrid = document.querySelector("#positionsGrid");
+const positionsByNameButton = document.querySelector("#positionsByNameButton");
+const positionsBySlotButton = document.querySelector("#positionsBySlotButton");
 const validationSummary = document.querySelector("#validationSummary");
 const printButton = document.querySelector("#printButton");
 const printSheets = document.querySelector("#printSheets");
@@ -517,6 +520,40 @@ function handlePositionChange(playerId, inningIndex, value) {
   render();
 }
 
+function handlePositionSlotAssignment(inningIndex, slotKey, playerId) {
+  const rows = getPositionEntryRows();
+  const targetRow = rows.find((row) => row.key === slotKey);
+  if (!targetRow) {
+    return;
+  }
+
+  const assignments = getInningSlotAssignments(inningIndex);
+  Object.keys(assignments).forEach((key) => {
+    if (assignments[key] === playerId) {
+      delete assignments[key];
+    }
+  });
+  delete assignments[slotKey];
+
+  if (playerId) {
+    assignments[slotKey] = playerId;
+  }
+
+  state.players.forEach((player) => {
+    player.positions[inningIndex] = "DH";
+  });
+
+  Object.entries(assignments).forEach(([key, assignedPlayerId]) => {
+    const row = rows.find((entry) => entry.key === key);
+    const player = state.players.find((entry) => entry.id === assignedPlayerId);
+    if (row && player) {
+      player.positions[inningIndex] = row.position;
+    }
+  });
+
+  render();
+}
+
 function handleRelieverToggle(playerId, checked) {
   const player = state.players.find((entry) => entry.id === playerId);
   if (!player) {
@@ -571,6 +608,52 @@ function getPlayersByBattingOrder() {
 function getPlayersAlphabetically() {
   const getFirstName = (name) => (name || "").trim().split(/\s+/)[0] || "";
   return [...state.players].sort((a, b) => getFirstName(a.name).localeCompare(getFirstName(b.name)) || (a.name || "").localeCompare(b.name || ""));
+}
+
+function getPositionEntryRows() {
+  const extraDhRows = Math.max(1, state.players.length - FIELD_POSITIONS.length);
+  return [
+    ...FIELD_POSITIONS.map((position) => ({
+      key: position,
+      label: position,
+      position
+    })),
+    ...Array.from({ length: extraDhRows }, (_, index) => ({
+      key: `DH-${index + 1}`,
+      label: extraDhRows === 1 ? "DH" : `DH ${index + 1}`,
+      position: "DH"
+    }))
+  ];
+}
+
+function getInningSlotAssignments(inningIndex) {
+  const rows = getPositionEntryRows();
+  const assignments = {};
+  const dhRows = rows.filter((row) => row.position === "DH");
+  let nextDhIndex = 0;
+
+  getPlayersByBattingOrder().forEach((player) => {
+    const position = player.positions[inningIndex] || "DH";
+
+    if (position !== "DH") {
+      const row = rows.find((entry) => entry.position === position);
+      if (row && !assignments[row.key]) {
+        assignments[row.key] = player.id;
+        return;
+      }
+    }
+
+    while (nextDhIndex < dhRows.length && assignments[dhRows[nextDhIndex].key]) {
+      nextDhIndex += 1;
+    }
+
+    if (nextDhIndex < dhRows.length) {
+      assignments[dhRows[nextDhIndex].key] = player.id;
+      nextDhIndex += 1;
+    }
+  });
+
+  return assignments;
 }
 
 function getPitcherInnings(player) {
@@ -869,6 +952,20 @@ function renderBattingOrder() {
 
 function renderPositionsGrid() {
   positionsGrid.innerHTML = "";
+  positionsByNameButton.setAttribute("aria-pressed", String(state.positionEntryMode === "name"));
+  positionsBySlotButton.setAttribute("aria-pressed", String(state.positionEntryMode === "slot"));
+  positionsByNameButton.classList.toggle("secondary", state.positionEntryMode !== "name");
+  positionsBySlotButton.classList.toggle("secondary", state.positionEntryMode !== "slot");
+
+  if (state.positionEntryMode === "slot") {
+    renderPositionsBySlotGrid();
+    return;
+  }
+
+  renderPositionsByNameGrid();
+}
+
+function renderPositionsByNameGrid() {
   const table = document.createElement("table");
   table.className = "positions-table";
 
@@ -928,6 +1025,105 @@ function renderPositionsGrid() {
         cell.appendChild(icon);
       }
 
+      row.appendChild(cell);
+    }
+
+    tbody.appendChild(row);
+  });
+
+  table.append(thead, tbody);
+  positionsGrid.appendChild(table);
+}
+
+function renderPossibleRelieverStrip() {
+  const wrap = document.createElement("div");
+  wrap.className = "reliever-strip";
+
+  const label = document.createElement("div");
+  label.className = "mini-label";
+  label.textContent = "Possible Relievers";
+  wrap.appendChild(label);
+
+  const chips = document.createElement("div");
+  chips.className = "reliever-chip-list";
+  getPlayersByBattingOrder().forEach((player) => {
+    const chip = document.createElement("label");
+    chip.className = "reliever-chip";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = player.possibleReliever;
+    checkbox.addEventListener("change", (event) => handleRelieverToggle(player.id, event.target.checked));
+
+    const text = document.createElement("span");
+    text.textContent = player.name || "Unnamed Player";
+
+    chip.append(checkbox, text);
+    chips.appendChild(chip);
+  });
+
+  wrap.appendChild(chips);
+  positionsGrid.appendChild(wrap);
+}
+
+function renderPositionsBySlotGrid() {
+  renderPossibleRelieverStrip();
+
+  const table = document.createElement("table");
+  table.className = "positions-table positions-table-by-slot";
+
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  ["Position", "Inning 1", "Inning 2", "Inning 3", "Inning 4", "Inning 5", "Inning 6"].forEach((label) => {
+    const th = document.createElement("th");
+    th.textContent = label;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  const tbody = document.createElement("tbody");
+  const rows = getPositionEntryRows();
+  const players = getPlayersByBattingOrder();
+
+  rows.forEach((rowData) => {
+    const row = document.createElement("tr");
+    const labelCell = document.createElement("td");
+    labelCell.className = `player-cell slot-label position-${getPositionTone(rowData.position)}`;
+    labelCell.textContent = rowData.label;
+    if (needsWarmupBall(rowData.position)) {
+      const icon = document.createElement("span");
+      icon.className = "warmup-icon";
+      icon.title = "Grab a ball for warmups";
+      icon.setAttribute("aria-label", "Grab a ball for warmups");
+      labelCell.appendChild(icon);
+    }
+    row.appendChild(labelCell);
+
+    for (let inningIndex = 0; inningIndex < INNINGS; inningIndex += 1) {
+      const assignments = getInningSlotAssignments(inningIndex);
+      const cell = document.createElement("td");
+      const select = document.createElement("select");
+      select.className = `position-select position-${getPositionTone(rowData.position)}`;
+
+      const blankOption = document.createElement("option");
+      blankOption.value = "";
+      blankOption.textContent = "Open";
+      blankOption.selected = !assignments[rowData.key];
+      select.appendChild(blankOption);
+
+      players.forEach((player) => {
+        const option = document.createElement("option");
+        option.value = player.id;
+        option.textContent = player.name || `Player ${player.battingOrder}`;
+        option.selected = assignments[rowData.key] === player.id;
+        select.appendChild(option);
+      });
+
+      select.addEventListener("change", (event) => {
+        handlePositionSlotAssignment(inningIndex, rowData.key, event.target.value);
+      });
+
+      cell.appendChild(select);
       row.appendChild(cell);
     }
 
@@ -1334,6 +1530,14 @@ restoreRosterButton.addEventListener("click", restoreSavedRoster);
 saveLineupButton.addEventListener("click", saveCurrentLineup);
 resetButton.addEventListener("click", resetDemoRoster);
 printButton.addEventListener("click", () => window.print());
+positionsByNameButton.addEventListener("click", () => {
+  state.positionEntryMode = "name";
+  render();
+});
+positionsBySlotButton.addEventListener("click", () => {
+  state.positionEntryMode = "slot";
+  render();
+});
 
 loadSavedLineups();
 loadSavedRoster();

@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.8
+
+- Added a second defensive-position entry mode so coaches can build innings by position as well as by player name.
+- Enlarged the positions-by-batting-order print sheet so it fills more of the page and is easier for kids to read.
+
 ## v1.0.7
 
 - Changed the dugout batting-order print page to use a single lineup column on the left and the role reminders on the right.
