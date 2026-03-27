@@ -846,11 +846,13 @@ select {
   .sheet-card.coach-sheet {
     page-break-after: auto;
     break-after: auto;
-    height: auto;
-    min-height: 0;
-    margin-bottom: 0.22in;
-    display: block;
-    overflow: visible;
+    height: 50vh;
+    min-height: 50vh;
+    max-height: 50vh;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .sheet-card.coach-sheet:nth-of-type(2) {
@@ -860,8 +862,9 @@ select {
   }
 
   .sheet-card.dugout-sheet {
-    height: 8.9in;
-    min-height: 8.9in;
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -869,8 +872,9 @@ select {
   }
 
   .sheet-card.positions-sheet {
-    height: 9.08in;
-    min-height: 9.08in;
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
