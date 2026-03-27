@@ -804,6 +804,7 @@ select {
   .lineup-panel,
   .positions-panel,
   .validation-panel,
+  .app-footer,
   #printButton {
     display: none !important;
   }
@@ -866,9 +867,9 @@ select {
   }
 
   .sheet-card.dugout-sheet {
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
+    height: 87vh;
+    min-height: 87vh;
+    max-height: 87vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -876,9 +877,9 @@ select {
   }
 
   .sheet-card.positions-sheet {
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
+    height: 87vh;
+    min-height: 87vh;
+    max-height: 87vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
